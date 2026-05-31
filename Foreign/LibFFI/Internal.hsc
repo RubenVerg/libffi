@@ -45,5 +45,8 @@ ffi_type_size_and_alignment cType = do
 foreign import ccall safe ffi_prep_cif
     :: Ptr CIF -> C_ffi_abi -> CUInt -> Ptr CType -> Ptr (Ptr CType) -> IO C_ffi_status
 
+foreign import ccall safe ffi_get_struct_offsets
+    :: C_ffi_abi -> Ptr CType -> Ptr CSize -> IO C_ffi_status
+
 foreign import ccall safe ffi_call
     :: Ptr CIF -> FunPtr a -> Ptr CValue -> Ptr (Ptr CValue) -> IO ()

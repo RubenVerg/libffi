@@ -64,6 +64,13 @@ sizeAndAlignmentOfCType cType = do
     (size, alignment) <- ffi_type_size_and_alignment cType
     return (fromIntegral size, fromIntegral alignment)
 
+structOffsetsOfCType :: Int -> Ptr CType -> IO [Int]
+structOffsetsOfCType len cType = allocaArray len $ \osPtr -> do
+    status <- ffi_get_struct_offsets ffi_default_abi cType osPtr
+    unless (status == ffi_ok) $
+        error "structOffsetsOfCType: ffi_get_struct_offsets failed"
+    fmap fromIntegral <$> peekArray len osPtr
+
 callFFI :: FunPtr a -> RetType b -> [Arg] -> IO b
 callFFI funPtr (RetType actRet) args
     = allocaBytes sizeOf_cif $ \cif ->
