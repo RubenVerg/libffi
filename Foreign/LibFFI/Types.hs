@@ -17,6 +17,9 @@ module Foreign.LibFFI.Types (
     -- ** Floating point types
     argCFloat,
     argCDouble,
+    -- ** Complex floating point types
+    argComplexCFloat,
+    argComplexCDouble,
     -- ** Various other C types
     argCSize,
     argCTime,
@@ -47,6 +50,9 @@ module Foreign.LibFFI.Types (
     -- ** Floating point types
     retCFloat,
     retCDouble,
+    -- ** Complex floating point types
+    retComplexCFloat,
+    retComplexCDouble,
     -- ** Various other C types
     retCSize,
     retCTime,
@@ -67,6 +73,7 @@ import Data.List
 import Data.Char
 import Data.Int
 import Data.Word
+import Data.Complex
 
 import Foreign.C.Types
 import Foreign.Ptr
@@ -110,6 +117,11 @@ argCFloat   :: CFloat -> Arg
 argCFloat   = mkStorableArg ffi_type_float
 argCDouble  :: CDouble -> Arg
 argCDouble  = mkStorableArg ffi_type_double
+
+argComplexCFloat   :: Complex CFloat -> Arg
+argComplexCFloat   = mkStorableArg ffi_type_complex_float
+argComplexCDouble  :: Complex CDouble -> Arg
+argComplexCDouble  = mkStorableArg ffi_type_complex_double
 
 argCSize    :: CSize -> Arg
 argCSize    = mkStorableArg ffi_type_size
@@ -177,6 +189,11 @@ retCFloat   :: RetType CFloat
 retCFloat   = mkStorableRetType ffi_type_float
 retCDouble  :: RetType CDouble
 retCDouble  = mkStorableRetType ffi_type_double
+
+retComplexCFloat   :: RetType (Complex CFloat)
+retComplexCFloat   = mkStorableRetType ffi_type_complex_float
+retComplexCDouble  :: RetType (Complex CDouble)
+retComplexCDouble  = mkStorableRetType ffi_type_complex_double
 
 retCSize    :: RetType CSize
 retCSize    = mkStorableRetType ffi_type_size
